@@ -1,0 +1,2 @@
+# Historical sources are preserved exactly as supplied for provenance.
+archive/sources/* -whitespace
