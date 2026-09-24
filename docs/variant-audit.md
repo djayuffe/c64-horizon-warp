@@ -21,7 +21,7 @@ The supplied `deepseek_asm.prg` identifies as `SYS 4608`; `deepseek_asm_20251009
 The canonical source was assembled with:
 
 ```sh
-acme -f cbm -o c64-padded-deepseek.prg src/c64-padded-deepseek.s
+acme -f cbm -o c64-horizon-warp.prg src/c64-horizon-warp.s
 ```
 
 It produced a `CBM BASIC, SYS 4096` program. A PAL VICE run completed autostart and reached its normal cycle-limited exit while saving the screenshot tracked in `assets/`.

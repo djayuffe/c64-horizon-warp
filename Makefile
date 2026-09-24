@@ -1,7 +1,7 @@
 ACME ?= acme
 VICE ?= x64sc
-SOURCE := src/c64-padded-deepseek.s
-TARGET := build/c64-padded-deepseek.prg
+SOURCE := src/c64-horizon-warp.s
+TARGET := build/c64-horizon-warp.prg
 
 .PHONY: all check run clean
 
