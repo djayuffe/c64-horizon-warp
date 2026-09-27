@@ -9,7 +9,7 @@ all: $(TARGET)
 
 $(TARGET): $(SOURCE) | build
 
-	$(ACME) -f cbm -o $@ $<
+	$(ACME) --strict-segments -f cbm -o $@ $<
 
 build:
 	mkdir -p $@

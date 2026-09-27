@@ -49,3 +49,11 @@ The PRG loads at `$0801` and contains a tokenized BASIC line that executes `SYS 
 Because the canonical release keeps interrupts disabled, the main loop owns all frame state. `FrameCount`, scroller position, colour phase, logo phase, plasma phase, and sprite state are advanced only from this loop. `KeyPoll` intentionally does nothing in the safe release.
 
 This means a future interactive or IRQ-based variant must be designed as a separate change: it must establish safe ownership for state currently updated only by the foreground loop.
+
+## Correctness notes
+
+The logo renderer writes colors directly to the intended `COLOR` rows while
+preserving its text index. This avoids aliasing a temporary index onto the high
+byte of a zero-page pointer, which can otherwise redirect writes outside color
+RAM. The CIA2 VIC-bank select pins are also explicitly configured as outputs;
+the selected bank is not left dependent on prior KERNAL state.

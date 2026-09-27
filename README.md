@@ -1,20 +1,45 @@
 # C64 Horizon Warp
 
-C64 Horizon Warp is a self-contained Commodore 64 PAL demo assembled with [ACME](https://sourceforge.net/projects/acme-crossass/). It is structured from a supplied collection of DeepSeek-named C64 source variants, with the newest self-contained, buildable `SYS 4096` implementation selected as the canonical release.
+C64 Horizon Warp is a self-contained Commodore 64 PAL demo assembled with
+[ACME](https://sourceforge.net/projects/acme-crossass/). It is structured from
+a supplied collection of C64 source variants, with the newest self-contained,
+buildable `SYS 4096` implementation selected and repaired as the canonical
+release.
 
-The runtime uses raster-polled timing rather than a custom raster IRQ chain. It draws a blue-themed logo scene with a smooth text scroller, colour waves, sprite motion, plasma, and raster-bar sections while keeping IRQs disabled during the effect.
-
-![Native VICE capture of Horizon Warp](assets/c64-horizon-warp-live.png)
+The runtime uses raster-polled timing rather than a custom raster IRQ chain. It
+draws a blue-themed logo scene with a smooth text scroller, colour waves,
+sprite motion, plasma, and raster-bar sections while keeping IRQs disabled
+during the effect.
 
 ## Release status
 
-The canonical source builds cleanly with ACME, produces a CBM BASIC PRG with `SYS 4096`, and was autostarted successfully in PAL VICE for the screenshot above. Historical source and prebuilt variants are retained under `archive/` for provenance; they are not presented as equivalent release candidates.
+The canonical source builds cleanly with ACME and produces a CBM BASIC PRG
+with `SYS 4096`. The logo-color path and VIC bank-select setup have been
+audited and corrected. Historical source and prebuilt variants are retained
+under `archive/` for provenance; they are not presented as equivalent release
+candidates.
+
+## Visual presentation
+
+The effect begins with a centered two-line `HORIZON WARP` title and drop
+shadow, set against a blue screen and framed by custom character borders. The
+upper logo colors shimmer through the fire and ice palettes. A 40-column
+greeting row fine-scrolls at the lower edge while eight multicolor sprites
+move through sine-derived coordinates. The middle section applies a moving
+color wave to screen rows 5–15; later frame sections shift the background
+plasma and cycle lower raster bars.
+
+The former tracked image was a diagnostic VICE frame which did not clearly
+show the demo and has therefore been removed from release-facing documentation.
+An authentic replacement must be captured from the rebuilt PRG in a PAL VICE
+session; no concept art is presented as runtime output.
 
 ## Features
 
 - BASIC `RUN` loader that transfers control to `$1000` (`SYS 4096`).
 - PAL raster-polled frame pacing with no custom IRQ handler required at runtime.
-- ROM character-set copy and a modified in-RAM character set at `$2000`.
+- ROM character-set copy, in-RAM boldening, and a modified border glyph at
+  `$2000`.
 - Smooth bottom text scroller, animated logo shine, and colour-wave treatment.
 - Sprite motion, plasma colour updates, and raster-bar sections scheduled at fixed raster positions.
 - A self-contained source file: the selected implementation has no missing binary/font dependency.
@@ -51,7 +76,6 @@ The selected safe/no-IRQ release has no interactive controls. Its `KeyPoll` rout
 src/
   c64-horizon-warp.s          Canonical, self-contained ACME source
 assets/
-  c64-horizon-warp-live.png   Verified native VICE capture
 archive/
   sources/                     Supplied historical sources, retained unchanged
   prebuilt/                    Supplied PRGs without an equivalent canonical source
@@ -71,7 +95,10 @@ git diff --check
 git fsck --no-reflogs
 ```
 
-For a runtime check, use `make run` in a PAL VICE configuration and let the demo progress through several frames. The expected presentation is a continuous effect loop; no keyboard action is required.
+For a runtime check, use `make run` in a PAL VICE configuration and let the
+demo progress through several frames. The expected presentation is a continuous
+effect loop; no keyboard action is required. Capture documentation images only
+after this rebuilt PRG has reached the animated title and scroller state.
 
 ## Variant provenance
 

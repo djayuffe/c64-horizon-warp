@@ -30,6 +30,7 @@ VICIRQEN    = $d01a
 VICIRQFLAG  = $d019
 CIA1_ICR    = $dc0d
 CIA2_PRA    = $dd00
+CIA2_DDRA   = $dd02
 CIA2_ICR    = $dd0d
 
 SCREEN      = $0400
@@ -155,6 +156,10 @@ Start:
     and #%11111100
     ora #%00000011
     sta CIA2_PRA
+    ; VIC bank-select pins must be outputs; retain the IEC configuration bits.
+    lda CIA2_DDRA
+    ora #%00000011
+    sta CIA2_DDRA
     jsr SetCharBase2000
     lda #$1b : sta CTRL1
     lda #$08 : sta CTRL2
@@ -519,21 +524,13 @@ DrawLogo:
     lda LogoText,y
     sta (ZP_DstLo),y          ; shadow
 
-    ; color main row2 (Y+Logo1StartX)
-    lda #< (COLOR+2*40) : sta ZP_TmpA
-    lda #> (COLOR+2*40) : sta ZP_TmpB
-    sty ZP_TmpB
-    tya : clc : adc Logo1StartX : tay
-    lda #$01 : sta (ZP_TmpA),y
-    ldy ZP_TmpB
-
-    ; color shadow row3 col+1
-    lda #< (COLOR+3*40+1) : sta ZP_TmpA
-    lda #> (COLOR+3*40+1) : sta ZP_TmpB
-    sty ZP_TmpB
-    tya : clc : adc Logo1StartX : tay
-    lda #$02 : sta (ZP_TmpA),y
-    ldy ZP_TmpB
+    ; Color main row 2 and its row-3 shadow. Preserve the source index on
+    ; the stack; the previous implementation overwrote a zero-page pointer's
+    ; high byte with Y and wrote colour data to unrelated memory.
+    tya : pha : clc : adc Logo1StartX : tay
+    lda #$01 : sta COLOR+2*40,y
+    lda #$02 : sta COLOR+3*40+1,y
+    pla : tay
 
     iny
     bne @draw1
@@ -585,21 +582,11 @@ DrawLogo:
     lda LogoText2,y
     sta (ZP_DstLo),y
 
-    ; color main row3
-    lda #< (COLOR+3*40) : sta ZP_TmpA
-    lda #> (COLOR+3*40) : sta ZP_TmpB
-    sty ZP_TmpB
-    tya : clc : adc Logo2StartX : tay
-    lda #$0e : sta (ZP_TmpA),y
-    ldy ZP_TmpB
-
-    ; color shadow row4 col+1
-    lda #< (COLOR+4*40+1) : sta ZP_TmpA
-    lda #> (COLOR+4*40+1) : sta ZP_TmpB
-    sty ZP_TmpB
-    tya : clc : adc Logo2StartX : tay
-    lda #$02 : sta (ZP_TmpA),y
-    ldy ZP_TmpB
+    ; Color main row 3 and its row-4 shadow without corrupting zero page.
+    tya : pha : clc : adc Logo2StartX : tay
+    lda #$0e : sta COLOR+3*40,y
+    lda #$02 : sta COLOR+4*40+1,y
+    pla : tay
 
     iny
     bne @draw2
