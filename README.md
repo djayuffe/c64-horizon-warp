@@ -21,6 +21,17 @@ candidates.
 
 ## Visual presentation
 
+![C64 Horizon Warp source-derived effect atlas](assets/c64-horizon-warp-effects.png)
+
+The effect atlas shows the four visual sections at one deterministic set of
+table phases: logo shine and fine scroller; sprite motion over the color wave;
+the plasma palette; and lower raster bars. It is generated from the canonical
+source's palette and phase tables with:
+
+```sh
+python3 tools/render_effect_atlas.py
+```
+
 The effect begins with a centered two-line `HORIZON WARP` title and drop
 shadow, set against a blue screen and framed by custom character borders. The
 upper logo colors shimmer through the fire and ice palettes. A 40-column
@@ -32,7 +43,8 @@ plasma and cycle lower raster bars.
 The former tracked image was a diagnostic VICE frame which did not clearly
 show the demo and has therefore been removed from release-facing documentation.
 An authentic replacement must be captured from the rebuilt PRG in a PAL VICE
-session; no concept art is presented as runtime output.
+session. The atlas above is labelled source-derived rather than an emulator
+capture; no concept art is presented as runtime output.
 
 ## Features
 
@@ -76,6 +88,7 @@ The selected safe/no-IRQ release has no interactive controls. Its `KeyPoll` rout
 src/
   c64-horizon-warp.s          Canonical, self-contained ACME source
 assets/
+  c64-horizon-warp-effects.png  Source-derived overview of all visual sections
 archive/
   sources/                     Supplied historical sources, retained unchanged
   prebuilt/                    Supplied PRGs without an equivalent canonical source
@@ -83,6 +96,8 @@ docs/
   architecture.md              Boot, memory, and raster-polled runtime design
   variant-audit.md             Build matrix and canonical-source decision
 Makefile                        ACME build, validation, VICE launch, cleanup
+tools/
+  render_effect_atlas.py        Reproducible visual documentation generator
 ```
 
 ## Verification
