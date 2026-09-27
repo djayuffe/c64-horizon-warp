@@ -1,0 +1,9 @@
+C64 Horizon Warp
+Copyright (C) 2026 Ulf Bertilsson
+
+The corrected canonical source in src/, build files, documentation, generated
+effect atlas, and project tooling are licensed under the GNU General Public
+License, version 3 or (at your option) any later version.
+
+Files under archive/ are historical supplied material retained for provenance.
+They are not relicensed by this notice.

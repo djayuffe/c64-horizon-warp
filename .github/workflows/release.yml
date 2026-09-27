@@ -1,0 +1,41 @@
+name: Publish Horizon Warp release
+
+on:
+  push:
+    tags: ["v*"]
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: Existing tag to publish
+        required: true
+        type: string
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.tag || github.ref }}
+      - name: Install ACME cross-assembler
+        run: |
+          sudo apt-get update
+          sudo apt-get install --yes acme
+      - name: Build and verify release assets
+        run: bash tools/verify_release.sh
+      - name: Publish GitHub release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ inputs.tag || github.ref_name }}
+          generate_release_notes: true
+          files: |
+            build/c64-horizon-warp.prg
+            LICENSE
+            NOTICE
+            README.md
+            docs/architecture.md
+            docs/variant-audit.md
+            assets/c64-horizon-warp-effects.png

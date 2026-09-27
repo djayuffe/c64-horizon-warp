@@ -1,0 +1,35 @@
+name: Verify Horizon Warp
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install ACME cross-assembler
+        run: |
+          sudo apt-get update
+          sudo apt-get install --yes acme
+      - name: Build and verify generated assets
+        run: bash tools/verify_release.sh
+      - name: Upload verified release inputs
+        uses: actions/upload-artifact@v4
+        with:
+          name: c64-horizon-warp
+          if-no-files-found: error
+          path: |
+            build/c64-horizon-warp.prg
+            LICENSE
+            NOTICE
+            README.md
+            docs/architecture.md
+            docs/variant-audit.md
+            assets/c64-horizon-warp-effects.png

@@ -1,5 +1,7 @@
 ; =============================================================
 ; deepseek_asm_20251009_ULTIMATE_EYECANDY_FINAL_PAL_r7f_SAFE_NOIRQ_SYS4096.s
+; Copyright (C) 2026 Ulf Bertilsson
+; SPDX-License-Identifier: GPL-3.0-or-later
 ; PAL C64 demo (NO IRQs) — raster-polled timing.
 ; IMPORTANT FIX: Entry point is now at $1000 (Start is first), so SYS4096 works.
 ; Includes r7e improvements: frame sync + safe raster waits. IRQs stay disabled.

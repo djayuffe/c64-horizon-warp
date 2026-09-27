@@ -1,4 +1,6 @@
 #!/usr/bin/env python3
+# Copyright (C) 2026 Ulf Bertilsson
+# SPDX-License-Identifier: GPL-3.0-or-later
 """Render a source-derived overview of C64 Horizon Warp's visual sections."""
 
 from pathlib import Path

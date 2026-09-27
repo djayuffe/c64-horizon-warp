@@ -6,6 +6,11 @@ a supplied collection of C64 source variants, with the newest self-contained,
 buildable `SYS 4096` implementation selected and repaired as the canonical
 release.
 
+Copyright © 2026 Ulf Bertilsson. The corrected source, build tooling,
+documentation, and generated effect atlas are available under the
+[GNU GPLv3 or later](LICENSE). `archive/` preserves supplied historical
+material for provenance and is not relicensed by this notice; see [NOTICE](NOTICE).
+
 The runtime uses raster-polled timing rather than a custom raster IRQ chain. It
 draws a blue-themed logo scene with a smooth text scroller, colour waves,
 sprite motion, plasma, and raster-bar sections while keeping IRQs disabled
@@ -72,6 +77,19 @@ make run
 
 The generated program is `build/c64-horizon-warp.prg`. To run it on hardware, load the PRG and enter `RUN`.
 
+## Continuous integration and releases
+
+GitHub Actions rebuilds the canonical PRG with strict ACME segments on every
+push and pull request. It checks the PRG signature, regenerates the
+source-derived effect atlas, and verifies that regeneration leaves no tracked
+output stale. The resulting PRG, GPLv3 license, README, and atlas are retained
+as CI artifacts.
+
+Pushing a `v*` tag runs those exact checks again before creating a GitHub
+Release. The release contains the verified PRG plus the source, license,
+README, architecture notes, variant audit, and all-effects atlas. The next
+release is `v1.1.0`.
+
 ## Runtime design
 
 The `Start` routine begins at `$1000`, disables CIA and VIC IRQ sources, sets a harmless NMI vector, configures VIC bank 0, clears display memory, copies the ROM character set, initializes visual state, and draws the initial logo/borders. `MainLoop` then synchronizes on each PAL frame start and runs its visual sections at raster lines 50, 120, 170, and 220.
@@ -121,4 +139,8 @@ The source set includes several versions that either rely on a missing `custom_c
 
 ## Naming and reuse
 
-The repository is named **C64 Horizon Warp**. The canonical source retains its supplied technical filename in version history; it was copied without altering its code. No license file was supplied with the source collection, so reuse terms have not been asserted or inferred.
+The repository is named **C64 Horizon Warp**. The canonical source retains its
+supplied technical filename in version history; it was copied without altering
+its historical identifier. GPLv3-or-later applies to the corrected canonical
+source and project-authored assets as stated above. No separate reuse terms are
+asserted for the preserved inputs in `archive/`.
