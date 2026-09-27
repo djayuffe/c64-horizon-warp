@@ -18,7 +18,7 @@ build:
 
 check: $(TARGET)
 	test -s $(TARGET)
-	@file $(TARGET) | grep -q 'CBM BASIC, SYS 4096'
+	python3 tools/check_prg.py $(TARGET)
 
 run: $(TARGET)
 	$(VICE) -autostartprgmode 1 -autostart $(TARGET)

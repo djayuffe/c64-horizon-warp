@@ -88,7 +88,7 @@ as CI artifacts.
 Pushing a `v*` tag runs those exact checks again before creating a GitHub
 Release. The release contains the verified PRG plus the source, license,
 README, architecture notes, variant audit, and all-effects atlas. The next
-release is `v1.1.0`.
+release is `v1.1.1`.
 
 ## Runtime design
 
