@@ -86,10 +86,15 @@ output stale. It verifies the tracked `SHA256SUMS` manifest as a final
 integrity gate. The resulting PRG, checksum manifest, GPLv3 license, README,
 and atlas are retained as CI artifacts.
 
+To verify a release, download its PRG and `SHA256SUMS`, then run
+`sha256sum -c SHA256SUMS` from the extracted release directory. The manifest
+contains the generated `build/c64-horizon-warp.prg` checksum as well as every
+tracked release input.
+
 Pushing a `v*` tag runs those exact checks again before creating a GitHub
 Release. The release contains the verified PRG plus the source, license,
 README, architecture notes, variant audit, and all-effects atlas. The next
-release is `v1.1.2`.
+release is `v1.1.3`.
 
 ## Runtime design
 
