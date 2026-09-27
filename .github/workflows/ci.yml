@@ -13,7 +13,7 @@ jobs:
   verify:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - name: Install ACME cross-assembler
         run: |
           sudo apt-get update
@@ -27,6 +27,7 @@ jobs:
           if-no-files-found: error
           path: |
             build/c64-horizon-warp.prg
+            SHA256SUMS
             LICENSE
             NOTICE
             README.md

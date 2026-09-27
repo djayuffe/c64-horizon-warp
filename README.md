@@ -82,13 +82,14 @@ The generated program is `build/c64-horizon-warp.prg`. To run it on hardware, lo
 GitHub Actions rebuilds the canonical PRG with strict ACME segments on every
 push and pull request. It checks the PRG signature, regenerates the
 source-derived effect atlas, and verifies that regeneration leaves no tracked
-output stale. The resulting PRG, GPLv3 license, README, and atlas are retained
-as CI artifacts.
+output stale. It verifies the tracked `SHA256SUMS` manifest as a final
+integrity gate. The resulting PRG, checksum manifest, GPLv3 license, README,
+and atlas are retained as CI artifacts.
 
 Pushing a `v*` tag runs those exact checks again before creating a GitHub
 Release. The release contains the verified PRG plus the source, license,
 README, architecture notes, variant audit, and all-effects atlas. The next
-release is `v1.1.1`.
+release is `v1.1.2`.
 
 ## Runtime design
 
